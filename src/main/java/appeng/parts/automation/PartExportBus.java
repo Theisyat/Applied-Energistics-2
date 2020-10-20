@@ -183,8 +183,8 @@ public class PartExportBus extends PartSharedItemBus implements ICraftingRequest
 								this.getProxy().getGrid(), cg, this.mySrc ) || this.didSomething;
 					}
 				}
-
 				this.updateSchedulingMode( schedulingMode, x );
+				
 			}
 			else
 			{
