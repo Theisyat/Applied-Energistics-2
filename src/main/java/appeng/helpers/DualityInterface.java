@@ -670,9 +670,8 @@ public class DualityInterface implements IGridTickable, IStorageMonitorable, IIn
 			this.destination = this.gridProxy.getStorage().getInventory( AEApi.instance().storage().getStorageChannel( IItemStorageChannel.class ) );
 			final IEnergySource src = this.gridProxy.getEnergy();
 
-			if( this.craftingTracker.isBusy( x ) )
-			{
-				changed = this.handleCrafting( x, adaptor, itemStack ) || changed;
+			if( this.craftingTracker.isBusy( x ) ) {
+				changed = this.handleCrafting(x, adaptor, itemStack) || changed;
 			}
 			else if( itemStack.getStackSize() > 0 )
 			{
@@ -693,10 +692,7 @@ public class DualityInterface implements IGridTickable, IStorageMonitorable, IIn
 						throw new IllegalStateException( "bad attempt at managing inventory. ( addItems )" );
 					}
 				}
-				else
-				{
-					changed = this.handleCrafting( x, adaptor, itemStack ) || changed;
-				}
+				changed = this.handleCrafting(x, adaptor, itemStack) || changed;
 			}
 			else if( itemStack.getStackSize() < 0 )
 			{
