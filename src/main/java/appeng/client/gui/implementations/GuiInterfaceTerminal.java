@@ -344,7 +344,7 @@ public class GuiInterfaceTerminal extends AEBaseGui
 
 		for( final ClientDCInternalInv entry : this.byId.values() )
 		{
-			// ignore inventory if not doing a full rebuild or cache already marks it as miss.
+			// ignore inventory if not doing a full rebuild and cache already marks it as miss.
 			if( !rebuild && !cachedSearch.contains( entry ) )
 			{
 				continue;
@@ -352,7 +352,6 @@ public class GuiInterfaceTerminal extends AEBaseGui
 
 			// Shortcut to skip any filter if search term is ""/empty
 			boolean found = (searchFieldInputs.isEmpty() && searchFieldOutputs.isEmpty());
-			boolean interfaceHasFreeSlots = false;
 
 			// Search if the current inventory holds a pattern containing the search term.
 			if( !found )
@@ -365,11 +364,20 @@ public class GuiInterfaceTerminal extends AEBaseGui
 						found = ( this.itemStackMatchesSearchTerm( itemStack, searchFieldInputs, 0 ) );
 					else if( !searchFieldOutputs.isEmpty() )
 						found = ( this.itemStackMatchesSearchTerm( itemStack, searchFieldOutputs, 1 ) );
-					if (partInterfaceTerminal.onlyInterfacesWithFreeSlots && itemStack.isEmpty()) {
-						interfaceHasFreeSlots = true;
-					}
 					if( found )
 					{
+						break;
+					}
+				}
+			} 
+
+			// If only Interfaces with empty slots should be shown, check that here
+			boolean interfaceHasFreeSlots = false;
+			if (partInterfaceTerminal.onlyInterfacesWithFreeSlots) {
+				for( final ItemStack itemStack : entry.getInventory() )
+				{
+					if(itemStack.isEmpty()){
+						interfaceHasFreeSlots = true;
 						break;
 					}
 				}
